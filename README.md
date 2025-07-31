@@ -1,5 +1,9 @@
 # EventHub – Event Ticketing App
+![Eventhub](https://img.shields.io/badge/Built%20with-Next.js-black?style=for-the-badge&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
+### 🌐 [Visit Our Live Website](https://retro-newspaper-v27w.vercel.app/)
 EventHub is a modern event ticketing web application built with Next.js, React, and Tailwind CSS. Users can browse upcoming events, add tickets to a shopping cart, and proceed to a simple checkout flow. The app features a clean, responsive UI and a smooth user experience.
 
 ## Features
