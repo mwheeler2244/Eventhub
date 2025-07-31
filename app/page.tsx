@@ -1,103 +1,193 @@
-import Image from "next/image";
+"use client";
+import { useState } from "react";
+import { Lora } from "next/font/google";
+import Header from "./components/Header";
+import FeaturedEvent from "./components/FeaturedEvent";
+import EventList from "./components/EventList";
+import Cart from "./components/Cart";
+import Footer from "./components/Footer";
 
+const lora = Lora({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+});
+
+type Event = {
+  id: number;
+  name: string;
+  date: string;
+  price: number;
+  image: string;
+  location: string;
+};
+
+type CartItem = {
+  id: number;
+  quantity: number;
+};
+
+export type { Event, CartItem };
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const events: Event[] = [
+    {
+      id: 1,
+      name: "Music Man Fest",
+      date: "June 15, 2025",
+      price: 50,
+      location: "Central Park",
+      image:
+        "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400&q=80",
+    },
+    {
+      id: 2,
+      name: "Tech Expo",
+      date: "July 20, 2025",
+      price: 100,
+      location: "Convention Center",
+      image:
+        "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400&q=80",
+    },
+    {
+      id: 3,
+      name: "Art Gala",
+      date: "August 5, 2025",
+      price: 30,
+      location: "Metropolitan Museum",
+      image:
+        "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400&q=80",
+    },
+    {
+      id: 4,
+      name: "Food Festival",
+      date: "September 12, 2025",
+      price: 45,
+      location: "Riverside Plaza",
+      image:
+        "https://images.unsplash.com/photo-1532634922-8fe0b757fb13?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      id: 5,
+      name: "Film Premiere",
+      date: "October 3, 2025",
+      price: 75,
+      location: "Grand Theater",
+      image:
+        "https://images.unsplash.com/photo-1594122230689-45899d9e6f69?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400&q=80",
+    },
+    {
+      id: 6,
+      name: "Science Conference",
+      date: "November 15, 2025",
+      price: 120,
+      location: "University Auditorium",
+      image:
+        "https://images.unsplash.com/photo-1606761568499-6d2451b23c66?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400&q=80",
+    },
+  ];
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [message, setMessage] = useState("");
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const filteredEvents = events.filter((event) =>
+    event.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const addToCart = (id: number) => {
+    setCart((prev) =>
+      prev.some((item) => item.id === id)
+        ? prev.map((item) =>
+            item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+          )
+        : [...prev, { id, quantity: 1 }]
+    );
+
+    const event = events.find((e) => e.id === id);
+    setMessage(`Added ${event?.name} ticket!`);
+    setTimeout(() => setMessage(""), 2000);
+  };
+
+  const getTotal = () =>
+    cart.reduce((sum, item) => {
+      const event = events.find((e) => e.id === item.id);
+      return sum + (event?.price || 0) * item.quantity;
+    }, 0);
+
+  const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  const checkout = () => {
+    setCart([]);
+    setMessage("Please check your email for checkout details!");
+    setIsCartOpen(false);
+    setTimeout(() => setMessage(""), 3000);
+  };
+
+  const removeFromCart = (id: number) => {
+    setCart((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const updateQuantity = (id: number, newQuantity: number) => {
+    if (newQuantity < 1) {
+      return;
+    }
+    setCart((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
+  return (
+    <div
+      className={`${lora.className} min-h-screen bg-gray-50 text-gray-900 font-sans`}
+    >
+      {message && (
+        <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 bg-white shadow-lg rounded-lg text-center border-l-4 border-black min-w-80">
+          {message}
         </div>
+      )}
+
+      <Header
+        isSearchOpen={isSearchOpen}
+        setIsSearchOpen={setIsSearchOpen}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        cartItemCount={cartItemCount}
+        setIsCartOpen={setIsCartOpen}
+        isCartOpen={isCartOpen}
+      />
+
+      <FeaturedEvent event={events[0]} addToCart={addToCart} />
+
+      <main className="container mx-auto px-4 py-10">
+        <h2 className="text-3xl font-semibold mb-10 text-center">
+          More Upcoming Events
+        </h2>
+        <EventList events={filteredEvents} addToCart={addToCart} />
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+      <Cart
+        cart={cart}
+        events={events}
+        isCartOpen={isCartOpen}
+        setIsCartOpen={setIsCartOpen}
+        removeFromCart={removeFromCart}
+        updateQuantity={updateQuantity}
+        checkout={checkout}
+        getTotal={getTotal}
+      />
+
+      {isCartOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-30 z-40"
+          onClick={() => setIsCartOpen(false)}
+        ></div>
+      )}
+
+      <Footer />
     </div>
   );
 }
